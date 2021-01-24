@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './src/signup_screen.dart';
-import './src/welcome_screen.dart';
+import 'src/views/signup_screen.dart';
+import 'src/views/welcome_screen.dart';
 
 void main() {
   runApp(Trackr());
