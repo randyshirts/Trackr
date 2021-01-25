@@ -3,7 +3,6 @@ import 'src/views/signup/signup_screen.dart';
 import 'src/views/home/welcome_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(Trackr());
 }
 

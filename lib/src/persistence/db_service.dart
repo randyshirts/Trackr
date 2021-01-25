@@ -1,22 +1,22 @@
 import 'package:trackr/src/persistence/persistence.dart';
 import 'package:trackr/src/persistence/sqllite_service.dart';
 
-class DbInstance {
-  static final DbInstance _dbInstance = DbInstance._internal();
+class DbService {
+  static final DbService _dbInstance = DbService._internal();
   static final dbVersion = 1;
-  static Persistence _db;
+  static Persistence _dbService;
 
-  DbInstance._internal();
+  DbService._internal();
 
-  factory DbInstance() {
+  factory DbService() {
     return _dbInstance;
   }
 
   static Future<Persistence> get db async {
-    if (_db == null) {
-      _db = SqlLiteService();
-      await _db.initialize();
+    if (_dbService == null) {
+      _dbService = SqlLiteService();
+      await _dbService.initialize();
     }
-    return _db;
+    return _dbService;
   }
 }
