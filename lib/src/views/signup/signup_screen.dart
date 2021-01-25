@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackr/src/validation/validation_type.dart';
 import './animated_progress_indicator.dart';
 import 'text_editing_validation_controller.dart';
 
