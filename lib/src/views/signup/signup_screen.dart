@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trackr/src/model/user.dart';
+import 'package:trackr/src/persistence/db_instance.dart';
 import 'package:trackr/src/validation/validation_type.dart';
 import './animated_progress_indicator.dart';
 import 'text_editing_validation_controller.dart';
@@ -98,6 +100,12 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   void _showWelcomeScreen() {
+    User user = User(
+      firstName: _firstNameTextController.text,
+      lastName: _lastNameTextController.text,
+      userName: _usernameTextController.text,
+    );
+    DbInstance.db.then((db) async => await db.insertItem(user));
     Navigator.of(context).pushNamed('/welcome');
   }
 
