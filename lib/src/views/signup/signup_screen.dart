@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './animated_progress_indicator.dart';
+import 'text_editing_validation_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override
@@ -24,14 +25,19 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final _firstNameTextController = TextEditingController();
-  final _lastNameTextController = TextEditingController();
-  final _usernameTextController = TextEditingController();
+  final _firstNameTextController =
+      TextEditingValidationController(ValidationTypes.name);
+  final _lastNameTextController =
+      TextEditingValidationController(ValidationTypes.name);
+  final _usernameTextController =
+      TextEditingValidationController(ValidationTypes.username);
+  final _formKey = GlobalKey<FormState>();
   double _formProgress = 0;
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       onChanged: _updateFormProgress,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -41,21 +47,29 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _firstNameTextController,
-              decoration: InputDecoration(hintText: 'First name'),
+              decoration: InputDecoration(
+                hintText: 'First name',
+                errorText: _firstNameTextController.validate(),
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _lastNameTextController,
-              decoration: InputDecoration(hintText: 'Last name'),
+              decoration: InputDecoration(
+                hintText: 'Last name',
+                errorText: _lastNameTextController.validate(),
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: TextFormField(
               controller: _usernameTextController,
-              decoration: InputDecoration(hintText: 'Username'),
+              decoration: InputDecoration(
+                  hintText: 'Username',
+                  errorText: _usernameTextController.validate()),
             ),
           ),
           AnimatedProgressIndicator(value: _formProgress),
@@ -88,14 +102,14 @@ class _SignUpFormState extends State<SignUpForm> {
 
   void _updateFormProgress() {
     double progress = 0.0;
-    List<TextEditingController> controllers = [
+    List<TextEditingValidationController> controllers = [
       _firstNameTextController,
       _lastNameTextController,
       _usernameTextController
     ];
 
     for (var controller in controllers) {
-      if (controller.value.text.isNotEmpty) {
+      if (controller.validate() == null) {
         progress += 1 / controllers.length;
       }
     }
