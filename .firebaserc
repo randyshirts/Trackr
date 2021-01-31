@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "trackr-58db0"
+    "default": "trackr-58db0",
+    "trackr": "trackr-58db0"
   }
 }

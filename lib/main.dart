@@ -3,6 +3,8 @@ import 'src/views/signup/signup_screen.dart';
 import 'src/views/home/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io' show Platform;
 
 void main() {
   runApp(Trackr());
@@ -13,17 +15,21 @@ class Trackr extends StatelessWidget {
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
+  //TODO: Make it a stateful widget
+  @override
+  void initState() {
+    String host = Platform.isAndroid ? '10.0.2.2:8080' : 'localhost:8080';
+    FirebaseFirestore.instance.settings = Settings(
+      host: host,
+      sslEnabled: false,
+      persistenceEnabled: false,
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // // Switch host based on platform.
-    // String host = defaultTargetPlatform == TargetPlatform.windows
-    //     ? '10.0.2.2:8080'
-    //     : 'localhost:8080';
-
-    // // Set the host as soon as possible.
-    // FirebaseFirestore.instance.settings =
-    //     Settings(host: host, sslEnabled: false);
-
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
